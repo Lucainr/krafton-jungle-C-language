@@ -103,7 +103,31 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+    if (ll1 == NULL || ll2 == NULL) return;
+    if (ll1->head == NULL || ll2->head == NULL) return; // 끼워넣을 자리/노드가 없으면 종료
+
+    ListNode *p1 = ll1->head;
+    ListNode *p2 = ll2->head;
+
+    while (p1 != NULL && p2 != NULL) {
+        // ll2에서 하나 떼오기
+        ListNode *take = p2;
+        p2 = p2->next;
+
+        // p1 뒤에 끼워넣기
+        take->next = p1->next;
+        p1->next = take;
+
+        // 사이즈 갱신
+        ll1->size++;
+        ll2->size--;
+
+        // 다음 끼울 자리로 이동: 방금 끼운 노드 다음(원래 p1->next였던 곳)
+        p1 = take->next;
+    }
+
+    // ll2의 머리 업데이트(남은 노드 유지)
+    ll2->head = p2;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

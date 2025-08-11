@@ -86,7 +86,51 @@ int main()
 
 void moveEvenItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+    if (ll == NULL || ll->head == NULL || ll->size <= 1) return;
+
+    // 1) 홀수가 하나라도 있는지 확인 (전부 짝수면 변화 없음)
+    int hasOdd = 0;
+    for (ListNode *t = ll->head; t != NULL; t = t->next) {
+        if ((t->item & 1) == 1) { // 홀수
+            hasOdd = 1;
+            break;
+        }
+    }
+    if (!hasOdd) return; // 전부 짝수면 그대로
+
+    // 2) 초기 tail(원래 꼬리) 찾기
+    ListNode *tail = ll->head;
+    while (tail->next != NULL) tail = tail->next;
+
+    // 3) 원래 길이만큼만 처리
+    int count = ll->size;
+    ListNode *prev = NULL;
+    ListNode *cur = ll->head;
+
+    while (count-- > 0 && cur != NULL) {
+        ListNode *next = cur->next;
+
+        if ((cur->item & 1) == 0) { // 짝수 -> 뒤로 이동
+            // 현재 위치에서 제거
+            if (prev == NULL) {
+                ll->head = next;
+            } else {
+                prev->next = next;
+            }
+
+            // 꼬리 뒤에 붙이기
+            tail->next = cur;
+            cur->next = NULL;
+            tail = cur;
+
+            // prev는 그대로 (제거했으니까)
+        } else {
+            // 홀수는 앞쪽에 유지
+            prev = cur;
+        }
+
+        cur = next;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

@@ -39,6 +39,7 @@ int removeNode(LinkedList *ll, int index);
 int main()
 {
 	int c, i;
+	c = 1;
 	LinkedList ll;
 	LinkedList resultFrontList, resultBackList;
 
@@ -102,7 +103,45 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	if (ll == NULL || resultFrontList == NULL || resultBackList == NULL) return;
+
+    int n = ll->size;
+
+    // 기본 초기화
+    resultFrontList->head = NULL;
+    resultFrontList->size = 0;
+    resultBackList->head = NULL;
+    resultBackList->size = 0;
+
+    if (n == 0) {
+        // 원본도 이미 비어 있음
+        return;
+    }
+
+    // 앞/뒤 크기 결정 (앞이 하나 더 많음)
+    int frontSize = (n + 1) / 2;
+    int backSize  = n - frontSize;
+
+    // 앞 리스트의 head는 원본 head
+    resultFrontList->head = ll->head;
+    resultFrontList->size = frontSize;
+
+    // splitEnd: 앞 리스트의 마지막 노드
+    ListNode *splitEnd = ll->head;
+    for (int i = 1; i < frontSize; i++) {
+        splitEnd = splitEnd->next; // frontSize >= 1 보장
+    }
+
+    // 뒤 리스트 head는 splitEnd 다음
+    resultBackList->head = splitEnd->next;
+    resultBackList->size = backSize;
+
+    // 실제로 두 리스트로 분리
+    splitEnd->next = NULL;
+
+    // 원본은 비워 소유권 이전(이중 free 방지)
+    ll->head = NULL;
+    ll->size = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
