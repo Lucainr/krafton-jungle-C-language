@@ -104,7 +104,39 @@ int main()
 ////////////////////////////////////////////////////////////
 int balanced(char *expression)
 {
-/* add your code here */
+    Stack s;
+    s.ll.head = NULL;
+    s.ll.size = 0;
+
+    for (char *p = expression; *p != '\0'; ++p) {
+        char c = *p;
+
+        // 여는 괄호면 push
+        if (c == '(' || c == '[' || c == '{') {
+            push(&s, (int)c);
+        }
+        // 닫는 괄호면 매칭 검사
+        else if (c == ')' || c == ']' || c == '}') {
+            if (isEmptyStack(&s)) {
+                removeAllItemsFromStack(&s);
+                return 1; // 불균형: 닫는 괄호가 더 많음
+            }
+            char topc = (char)peek(&s);
+            pop(&s);
+            if ((c == ')' && topc != '(') ||
+                (c == ']' && topc != '[') ||
+                (c == '}' && topc != '{')) {
+                removeAllItemsFromStack(&s);
+                return 1; // 불균형: 종류가 맞지 않음
+            }
+        }
+        // 그 외 문자는 무시(문제 가정상 괄호만 있을 것)
+    }
+
+    // 남은 여는 괄호가 있으면 불균형
+    int notBalanced = !isEmptyStack(&s);
+    removeAllItemsFromStack(&s);
+    return notBalanced ? 1 : 0; // 1=not balanced, 0=balanced
 }
 
 ////////////////////////////////////////////////////////////

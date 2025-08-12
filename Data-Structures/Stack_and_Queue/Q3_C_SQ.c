@@ -101,9 +101,21 @@ int main()
 
 /////////////////////////////////////////////////////////////////////////////////
 
-int isStackPairwiseConsecutive(Stack *s)
-{
-  /* add your code here */
+int isStackPairwiseConsecutive(Stack *s){
+    if (!s) return 0;
+    LinkedList *ll = &(s->ll);
+
+    if (ll->size == 0) return 1;        // 빈 스택은 참으로 처리
+    if (ll->size % 2 != 0) return 0;    // 원소 수가 홀수면 짝이 안 맞음
+
+    ListNode *cur = ll->head;           // head가 스택 top
+    while (cur && cur->next) {
+        int a = cur->item;
+        int b = cur->next->item;
+        if (abs(a - b) != 1) return 0;  // 한 쌍이라도 아니면 실패
+        cur = cur->next->next;          // 다음 쌍으로
+    }
+    return 1;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

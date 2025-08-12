@@ -111,7 +111,15 @@ int main()
 
 void removeUntil(Stack *s, int value)
 {
-/* add your code here */
+    if (s == NULL) return;
+
+    // top이 value가 될 때까지 pop
+    while (!isEmptyStack(s) && peek(s) != value) {
+        pop(s);
+    }
+    // 여기서 종료 조건 2가지:
+    // 1) empty: value를 찾지 못한 경우 -> 전부 비워짐
+    // 2) peek()==value: 원하는 값이 top에 있음 -> 그대로 종료
 }
 
 //////////////////////////////////////////////////////////////////////////////////

@@ -116,12 +116,26 @@ int main()
 
 void createQueueFromLinkedList(LinkedList *ll, Queue *q)
 {
-	/* add your code here */
+    // 큐를 비우고 시작 (있어도 안전)
+    removeAllItemsFromQueue(q);
+
+    // 연결리스트를 앞에서부터 순회하며 그대로 enqueue
+    ListNode *cur = ll->head;
+    while (cur != NULL) {
+        enqueue(q, cur->item);
+        cur = cur->next;
+    }
 }
 
 void removeOddValues(Queue *q)
 {
-	/* add your code here */
+    // 현재 큐의 원소 개수를 고정해 두고, 그 횟수만큼만 회전
+    int n = q->ll.size;
+    for (int i = 0; i < n; i++) {
+        int x = dequeue(q);          // 앞에서 하나 꺼내고
+        if (x % 2 == 0) enqueue(q, x); // 짝수면 뒤에 다시 넣음 (홀수는 버림)
+        // 홀수는 그냥 버려져서 결과 큐에는 짝수만 남음
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////////////
