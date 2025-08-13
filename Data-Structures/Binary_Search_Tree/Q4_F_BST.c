@@ -91,7 +91,35 @@ int main()
 
 void postOrderIterativeS1(BSTNode *root)
 {
-	 /* add your code here */
+    if (root == NULL) return;
+
+    Stack s;
+    s.top = NULL;                 // 스택 초기화
+
+    BSTNode *cur = root;
+    BSTNode *lastVisited = NULL;  // 직전에 방문(출력)한 노드
+
+    while (cur != NULL || !isEmpty(&s)) {
+        // 1) 왼쪽 끝까지 내려가며 경로를 스택에 쌓기
+        if (cur != NULL) {
+            push(&s, cur);
+            cur = cur->left;
+        } else {
+            // 2) 스택 꼭대기 관찰
+            BSTNode *node = peek(&s);
+
+            // 2-1) 오른쪽 자식이 있고 아직 방문 안 했다면, 그쪽으로 이동
+            if (node->right != NULL && lastVisited != node->right) {
+                cur = node->right;
+            } 
+            // 2-2) 오른쪽이 없거나 이미 방문했다면, 현재 노드 방문(출력) 후 팝
+            else {
+                node = pop(&s);            // 팝한 노드가 곧 방문 노드
+                printf("%d ", node->item); // 방문(출력)
+                lastVisited = node;         // “오른쪽까지 끝난 상태”로 표시
+            }
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
