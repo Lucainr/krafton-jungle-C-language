@@ -102,7 +102,28 @@ int main()
 
 int smallestValue(BTNode *node)
 {
-	/* add your code here */
+    if (node == NULL) return 0; // 실제 최소값이 아닌, 빈 트리일 경우만 의미
+
+    int leftMin, rightMin;
+
+    // 왼쪽 서브트리 최소값
+    if (node->left != NULL)
+        leftMin = smallestValue(node->left);
+    else
+        leftMin = node->item; // 없으면 현재 노드 값으로
+
+    // 오른쪽 서브트리 최소값
+    if (node->right != NULL)
+        rightMin = smallestValue(node->right);
+    else
+        rightMin = node->item;
+
+    // 현재 노드, 왼쪽 최소, 오른쪽 최소 비교
+    int curMin = node->item;
+    if (leftMin  < curMin) curMin = leftMin;
+    if (rightMin < curMin) curMin = rightMin;
+
+    return curMin;
 }
 
 //////////////////////////////////////////////////////////////////////////////////

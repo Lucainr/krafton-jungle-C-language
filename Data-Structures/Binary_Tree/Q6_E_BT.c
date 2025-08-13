@@ -105,7 +105,18 @@ int main()
 
 void printSmallerValues(BTNode *node, int m)
 {
-	/* add your code here */
+    if (node == NULL) return;
+
+    // 왼쪽 서브트리
+    printSmallerValues(node->left, m);
+
+    // 현재 노드 처리
+    if (node->item < m) {
+        printf("%d ", node->item);
+    }
+
+    // 오른쪽 서브트리
+    printSmallerValues(node->right, m);
 }
 
 //////////////////////////////////////////////////////////////////////////////////

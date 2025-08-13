@@ -97,7 +97,10 @@ int main()
 int maxHeight(BTNode *node)
 
 {
-    /* add your code here */
+    if (node == NULL) return 0;
+    int left_height = maxHeight(node->left);
+    int right_height = maxHeight(node->right);
+    return (left_height > right_height ? left_height : right_height) + 1; // 현재 루트 1을 더함
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -204,7 +207,7 @@ BTNode* pop(Stack *stk){
 void printTree(BTNode *node){
     if(node == NULL) return;
 
-    printTree(node->left);
+    printTree(node->left);남
     printf("%d ",node->item);
     printTree(node->right);
 }

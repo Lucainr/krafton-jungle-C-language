@@ -99,9 +99,16 @@ int main()
 //////////////////////////////////////////////////////////////////////////////////
 
 int countOneChildNodes(BTNode *node)
-
 {
-    /* add your code here */
+    if (node == NULL) return 0;  // 기저 사례
+
+    // 현재 노드가 자식을 '정확히 하나' 갖는지 (XOR로 표현)
+    int hasOne = ((node->left == NULL) ^ (node->right == NULL)) ? 1 : 0;
+
+    // 왼쪽/오른쪽 서브트리에서의 개수를 재귀적으로 합산
+    return hasOne
+         + countOneChildNodes(node->left)
+         + countOneChildNodes(node->right);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

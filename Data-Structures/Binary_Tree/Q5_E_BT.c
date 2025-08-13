@@ -105,7 +105,16 @@ int main()
 
 void mirrorTree(BTNode *node)
 {
-	/* add your code here */
+    if (node == NULL) return;          // 1) 기저 사례
+
+    // 2) 현재 노드의 왼/오 자식을 교환
+    BTNode *tmp = node->left;
+    node->left  = node->right;
+    node->right = tmp;
+
+    // 3) 왼쪽, 오른쪽 서브트리도 재귀적으로 미러링
+    mirrorTree(node->left);
+    mirrorTree(node->right);
 }
 
 //////////////////////////////////////////////////////////////////////////////////

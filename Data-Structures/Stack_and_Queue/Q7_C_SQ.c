@@ -119,7 +119,7 @@ int balanced(char *expression)
         else if (c == ')' || c == ']' || c == '}') {
             if (isEmptyStack(&s)) {
                 removeAllItemsFromStack(&s);
-                return 1; // 불균형: 닫는 괄호가 더 많음
+                return 1; // 불균형 -닫는 괄호가 더 많음
             }
             char topc = (char)peek(&s);
             pop(&s);
@@ -127,10 +127,9 @@ int balanced(char *expression)
                 (c == ']' && topc != '[') ||
                 (c == '}' && topc != '{')) {
                 removeAllItemsFromStack(&s);
-                return 1; // 불균형: 종류가 맞지 않음
+                return 1; // 불균형 - 종류가 맞지 않음
             }
         }
-        // 그 외 문자는 무시(문제 가정상 괄호만 있을 것)
     }
 
     // 남은 여는 괄호가 있으면 불균형

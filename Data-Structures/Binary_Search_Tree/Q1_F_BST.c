@@ -18,7 +18,7 @@ typedef struct _bstnode{
 	struct _bstnode *left;
 	struct _bstnode *right;
 } BSTNode;   // You should not change the definition of BSTNode
-
+ 
 typedef struct _QueueNode {
 	BSTNode *data;
 	struct _QueueNode *nextPtr;
@@ -91,10 +91,38 @@ int main()
 
 //////////////////////////////////////////////////////////////////////////////////
 
+// 이진 탐색 트리를 레벨 순서(너비 우선 탐색, BFS)로 순회하는 함수
+// 큐를 이용하여 루트부터 같은 레벨 순서대로 노드를 방문함
 void levelOrderTraversal(BSTNode* root)
 {
+    // 트리가 비어있으면 바로 종료
+    if (root == NULL) {
+        return;
+    }
 
-    /* add your code here */
+    // 큐 초기화 (head = 큐의 앞, tail = 큐의 뒤)
+    QueueNode *head = NULL, *tail = NULL;
+
+    // 탐색 시작을 위해 루트를 큐에 넣음
+    enqueue(&head, &tail, root);
+
+    // 큐가 빌 때까지 반복 (방문할 노드가 남아있을 동안)
+    while (!isEmpty(head)) {
+
+        // 큐의 맨 앞 노드를 꺼냄 (FIFO 구조)
+        BSTNode *cur = dequeue(&head, &tail);
+
+        // 꺼낸 노드의 값 출력
+        printf("%d ", cur->item);
+
+        // 현재 노드의 왼쪽 자식이 있으면 큐에 추가
+        if (cur->left != NULL)
+            enqueue(&head, &tail, cur->left);
+
+        // 현재 노드의 오른쪽 자식이 있으면 큐에 추가
+        if (cur->right != NULL)
+            enqueue(&head, &tail, cur->right);
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

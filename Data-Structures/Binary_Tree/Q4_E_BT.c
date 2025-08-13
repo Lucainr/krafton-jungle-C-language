@@ -103,7 +103,12 @@ int main()
 int sumOfOddNodes(BTNode *node)
 
 {
-    /* add your code here */
+    if (node == NULL) return 0;
+
+    // 현재 노드가 홀수면 그 값을 더하고, 아니면 0
+    int self = (node->item % 2 != 0) ? node->item : 0;
+    // 왼쪽, 오른쪽 서브트리의 홀수 합을 재귀적으로 더함
+    return self + sumOfOddNodes(node->left) + sumOfOddNodes(node->right);
 }
 
 //////////////////////////////////////////////////////////////////////////////////
